@@ -1,0 +1,22 @@
+<div class="text-center">
+  <h2>{{name}}</h2>
+  <p>{{description}}</p>
+  <p>Created by {{user.name}} on {{format_date date_created}}</p>
+  <h3>Comments</h3>
+  {{> comment-details post.comments}}
+  {{#if logged_in}}
+  <form class="comment-form">
+    <div>
+      <textarea id="comment-body"></textarea>
+    </div>
+
+    <div>
+      <button type="submit" class="btn btn-primary" data-id="{{post.id}}">ADD COMMMENT</button>    
+    </div>
+  </form>
+  {{/if}}
+</div>
+
+{{#if logged_in}}
+<script src="./js/comment.js"></script>
+{{/if}}
