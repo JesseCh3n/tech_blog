@@ -1,8 +1,11 @@
+const editBtn = document.querySelectorAll('.edit-post-form');
+const deleteBtn = document.querySelectorAll('.del-post-form');
+
 const newFormHandler = async (event) => {
   event.preventDefault();
 
-  const name = document.querySelector('#post-name').value.trim();
-  const description = document.querySelector('#post-desc').value.trim();
+  const name = document.querySelector('#new-post-name').value.trim();
+  const description = document.querySelector('#new-post-desc').value.trim();
 
   if (name && description) {
     const response = await fetch(`/api/posts`, {
@@ -26,7 +29,7 @@ const editFormHandler = async (event) => {
   if (event.target.hasAttribute('data-id')) {
     const id = event.target.getAttribute('data-id');
 
-    const description = document.querySelector('#post-desc').value.trim();
+    const description = document.querySelector(`[data-text="${id}"]`).value.trim();
 
     if (description) {
       const response = await fetch(`/api/posts/${id}`, {
@@ -64,12 +67,12 @@ const delButtonHandler = async (event) => {
 
 document
   .querySelector('.new-post-form')
-  .addEventListener('submit', newFormHandler);
+  .addEventListener('click', newFormHandler);
 
-document
-  .querySelector('.edit-post-form')
-  .addEventListener('submit', newFormHandler);
+editBtn.forEach(function(button) {
+  button.addEventListener('click', editFormHandler);
+});
 
-document
-  .querySelector('.project-post')
-  .addEventListener('click', delButtonHandler);
+deleteBtn.forEach(function(button) {
+  button.addEventListener('click', delButtonHandler);
+});

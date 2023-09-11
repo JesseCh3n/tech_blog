@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-auto">
-    <h2>Welcome, {{name}}!</h2>
+    <h2>Welcome, <span style="color:#FFCC00;">{{user}}</span>!</h2>
   </div>
 </div>
 
@@ -11,21 +11,22 @@
 
     {{#each posts as |post|}}
     <div class="row mb-2">
-      <div class="col-md-8">
-        <h4><a href="/post/{{post.id}}">{{post.name}}</a></h4>
+      <div class="col-md-12">
+        <h4><a href="api/posts/{{post.id}}">{{post.name}}</a></h4>
+        <p>
+          {{post.description}}
+        </p>
       </div>
-      <form class="form edit-post-form">
+      <form class="form">
         <div class="form-group">
           <label for="post-desc">description:</label>
-          <textarea class="form-input" id="post-desc" name="post-desc"></textarea>
+          <textarea class="form-input" id="post-desc" name="post-desc" placeholder="Edit your post here..." data-text="{{post.id}}"></textarea>
         </div>
         <div class="form-group">
-          <button type="submit" class="btn btn-primary">UPDATE</button>
+          <button type="button" class="edit-post-form btn btn-primary" data-id="{{post.id}}">UPDATE</button>
+          <button type="button" class="del-post-form btn btn-primary" data-id="{{post.id}}">DELETE</button>
         </div>
       </form>
-      <div class="col-md-4">
-        <button class="btn btn-sm btn-danger" data-id="{{post.id}}">DELETE</button>
-      </div>
     </div>
     {{/each}}
   </div>
@@ -34,20 +35,20 @@
   <div class="col-md-6">
     <h3>Create a New Post:</h3>
 
-    <form class="form new-post-form">
+    <form class="form">
       <div class="form-group">
-        <label for="post-name">post name:</label>
-        <input class="form-input" type="text" id="post-name" name="post-name" />
+        <label for="new-post-name">post name:</label>
+        <input class="form-input" type="text" id="new-post-name" placeholder="Enter your new post name..." name="post-name" />
       </div>
       <div class="form-group">
-        <label for="post-desc">description:</label>
-        <textarea class="form-input" id="post-desc" name="post-desc"></textarea>
+        <label for="new-post-desc">description:</label>
+        <textarea class="form-input" id="new-post-desc" placeholder="Enter your new post here..." name="post-desc"></textarea>
       </div>
       <div class="form-group">
-        <button type="submit" class="btn btn-primary">CREATE</button>
+        <button type="button" class="new-post-form btn btn-primary">CREATE</button>
       </div>
     </form>
   </div>
 </div>
 
-<script src="./js/dashboard.js"></script>
+<script src="/js/dashboard.js"></script>

@@ -8,8 +8,7 @@ router.get('/', async (req, res) => {
       attributes: ['id', 'name', 'description', 'date_created'],
       include: [
         {
-          model: Comment,
-          attributes: ['id', 'name', 'description', 'date_created'],          
+          model: Comment,  
           include: {
             model: User,
             attributes: ['name'],
@@ -33,14 +32,47 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/post/:id', async (req, res) => {
+// router.get('/posts/:id', async (req, res) => {
+//   try {
+//     const postData = await Post.findByPk(req.params.id, {
+//       attributes: ['id', 'name', 'description', 'date_created'],
+//       include: [
+//         {
+//           model: Comment,
+//           attributes: ['id', 'description', 'date_created'],          
+//           include: {
+//             model: User,
+//             attributes: ['name'],
+//           }
+//         },
+//         {
+//           model: User,
+//           attributes: ['name'],
+//         },
+//       ],
+//     });
+
+//     const post = postData.get({ plain: true });
+//     res.render('single-post', {
+//       post,
+//       logged_in: req.session.logged_in
+//     });
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
+
+// Use withAuth middleware to prevent access to route
+router.get('/dashboard', withAuth, async (req, res) => {
   try {
-    const postData = await Post.findByPk(req.params.id, {
+    const postData = await Post.findAll({
+      where: {
+        user_id: req.session.user_id
+      },
       attributes: ['id', 'name', 'description', 'date_created'],
       include: [
         {
-          model: Comment,
-          attributes: ['id', 'name', 'description', 'date_created'],          
+          model: Comment,  
           include: {
             model: User,
             attributes: ['name'],
@@ -53,31 +85,10 @@ router.get('/post/:id', async (req, res) => {
       ],
     });
 
-    const post = postData.get({ plain: true });
-
-    res.render('single-post', {
-      ...post,
-      logged_in: req.session.logged_in
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-// Use withAuth middleware to prevent access to route
-router.get('/dashboard', withAuth, async (req, res) => {
-  try {
-    // Find the logged in user based on the session ID
-    const userData = await User.findByPk(req.session.user_id, {
-      attributes: { exclude: ['password'] },
-      include: [{ model: Post }],
-      order: [['post.date_created', 'DESC']],
-    });
-
-    const user = userData.get({ plain: true });
-
+    const posts = postData.map((post) => post.get({ plain: true }));
     res.render('dashboard', {
-      ...user,
+      posts,
+      user: req.session.user_name,
       logged_in: true
     });
   } catch (err) {

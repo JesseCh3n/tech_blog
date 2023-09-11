@@ -7,18 +7,20 @@
   <title>Tech Blog</title>
   <link rel="stylesheet" href="/css/jass.css">
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 
-<body>
+<body class="w-screen dark-mode">
   <div class="flex-column justify-space-around">
     <header class="display-flex justify-space-between align-center p-2">
-      <h1>
+      <h1 style="margin-left:50px;">
+        <span><i class="material-icons" style="font-size:48px;color:#223971;">computer</i></span>
         <span><a href="/">Tech Blog</a></span>
       </h1>
-      <nav>
+      <nav style="margin-right:50px;">
+        {{#if logged_in}}
         <a href="/dashboard">Dashboard</a> |
         <!-- Conditionally render login or logout links -->
-        {{#if logged_in}}
         <button class="no-button" id="logout">logout</button>
         {{else}}
         <a href="/login">login</a>
@@ -30,7 +32,6 @@
       {{{ body }}}
     </main>
     <footer>
-      <p>Thank you for visiting!</p>
     </footer>
   </div>
 
