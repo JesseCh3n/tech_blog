@@ -20,12 +20,15 @@ N/A
 
 ## Usage
 
-You can start taking notes by hiting the 'plus' icon and writing down a note title and descriptions. Hit the 'save' icon to save a note in the database. Hit the 'delete' icon to delete a note.
+You can start viewing other's posts by navigating the main page. Please sign-up by clicking the 'login' link at the top to add posts and/or add comments to other posts. 
+For testigng purpose, please use the following login details:
+email: abc@123.com
+password: 12345678
 ![alt screenshot](./image.jpg)
 
 ## Credits
 
-Credit to Coding Bootcamp. Souce code: https://github.com/coding-boot-camp/miniature-eureka.git
+Credit to Coding Bootcamp.
 
 ## License
 [MIT](https://opensource.org/licenses/MIT)
